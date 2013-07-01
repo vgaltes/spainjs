@@ -397,6 +397,36 @@ casper.run(function(){
 					</section>
 				</section>
 				<section>
+					<section>
+						<h2>CasperJS, Raiders of the Lost Resource</h2>
+						<img src='./img/Raidersteaser.jpg' />
+					</section>
+					<section>
+						<h2>Look for a resource</h2>
+						<pre><code>casper.resoureExists('resource.extension');</code></pre>
+					</section>
+					<section>
+						<h2>Excercise</h2>
+						<p>Look for an existing resource and for an unexisting resource.</p>
+					</section>
+					<section>
+						<h2>The generic way</h2>
+						<pre><code>casper.on("resource.received", function(request) {
+    if (request.status === 404) {
+        this.echo('Resource Not Found:' + request.url);
+    }
+});</code></pre>
+					</section>
+					<section>
+						<h2>Another generic way...</h2>
+						<p>But only applicable to "direct" requests</p>
+						<pre><code>casper.on('http.status.404', function(resource) {
+    casper.echo(resource.url + ' is 404');
+});</code></pre>
+					</section>
+					<section><h2>Find out the differences between the two generic ways</h2></section>
+				</section>
+				<section>
 					<h1>THANKS!!</h1>
 						<div class="image">
 							<img width="50%" src="./img/thanks.jpg" />
