@@ -247,19 +247,32 @@
 				<section>
 					<section>
 						<h2>First steps</h2>
-					</section>
-					<section>
 						<pre><code>
 var casper = require('casper').create();
 
-casper.start('http://wwww.google.com', function(){
-    this.echo("Are we in google?!");
+casper.start('http://wwww.bing.com', function(){
+    this.echo("Are we at Bing??");
+});
+
+casper.run(function(){
+	this.echo('Finished');
+	this.exit();
+});
+						</code></pre>
+					</section>
+					<section>
+						<h2>Yes we are!</h2>
+						<pre><code>
+var casper = require('casper').create();
+
+casper.start('http://wwww.bing.com', function(){
+    this.echo('We are at ' + this.getTitle() + '(' + this.getCurrentUrl() + ')');
 });
 
 casper.run(function(){
 	this.echo('finished');
 	this.exit();
-})
+});
 						</code></pre>
 					</section>
 				</section>
