@@ -247,8 +247,7 @@
 				<section>
 					<section>
 						<h2>First steps</h2>
-						<pre><code>
-var casper = require('casper').create();
+						<pre><code>var casper = require('casper').create();
 
 casper.start('http://wwww.bing.com', function(){
     this.echo("Are we at Bing??");
@@ -257,13 +256,11 @@ casper.start('http://wwww.bing.com', function(){
 casper.run(function(){
 	this.echo('Finished');
 	this.exit();
-});
-						</code></pre>
+});</code></pre>
 					</section>
 					<section>
 						<h2>Yes we are!</h2>
-						<pre><code>
-var casper = require('casper').create();
+						<pre><code>var casper = require('casper').create();
 
 casper.start('http://wwww.bing.com', function(){
     this.echo('We are at ' + this.getTitle() 
@@ -273,11 +270,132 @@ casper.start('http://wwww.bing.com', function(){
 casper.run(function(){
 	this.echo('finished');
 	this.exit();
-});
-						</code></pre>
+});</code></pre>
 					</section>
 				</section>
-				
+
+				<section>
+					<section>
+						<h2>Linking steps</h2>
+						<pre><code>casper.then(function(){
+		// do something
+	});</code></pre>
+					</section>
+					<section>
+						<h2>Exercise</h2>
+						<p>
+							Start casper with an Url
+						</p>
+						<p>
+							Go to another Url (use casper.open('url'))
+						</p>
+						<p>
+							Print the url and the title
+						</p>
+					</section>
+					<section>
+						<h2>A possible solution</h2>
+						<pre><code>var casper = require('casper').create();
+
+casper.start('http://wwww.bing.com', function(){
+    this.echo('We are at ' + this.getTitle() 
+    	+ '(' + this.getCurrentUrl() + ')');
+});
+
+casper.then(function(){
+	this.open('http://spainjs.org');
+});
+
+casper.then(function(){
+	this.echo('We are at ' + this.getTitle() 
+    	+ '(' + this.getCurrentUrl() + ')');
+});
+
+casper.run(function(){
+	this.echo('finished');
+	this.exit();
+});</code></pre>
+					</section>
+					<section>
+						<h2>Another solution</h2>
+						<pre><code>var casper = require('casper').create();
+
+casper.start('http://wwww.bing.com', function(){
+    this.echo('We are at ' + this.getTitle() 
+    	+ '(' + this.getCurrentUrl() + ')');
+});
+
+casper.thenOpen(function(){
+	this.open('http://spainjs.org', function()
+	{
+		this.echo('We are at ' + this.getTitle() 
+    	+ '(' + this.getCurrentUrl() + ')');
+	});
+});
+
+casper.run(function(){
+	this.echo('finished');
+	this.exit();
+});</code></pre>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Are you really rendering the page?</h2>
+					</section>
+					<section>
+						<h2>Try capturing it</h2>
+						<pre><code>casper.capture('image_path.png');</code></pre>
+					</section>
+					<section>
+						<h2>Exercise</h2>
+						<p>Go to spainjs and capture the page</p>
+					</section>
+					<section>
+						<h2>This capture is so small!!</h2>
+						<p>You could set the viewport size (and another options) by passing an object to create function</p>
+						<pre><code>var casper = require('casper').create({
+	viewportSize: {
+		width: 1024,
+		height:768
+	}
+});</code></pre>
+					</section>
+					<section>
+						<h2>Exercise</h2>
+						<p>Capture spainjs.org with different viewport sizes</p>
+					</section>
+					<section>
+						<h2>This capture is so big! I don't want to capture all the page</h2>
+					</section>
+					<section>
+						<h2>Try capturing only a selector</h2>
+						<pre><code>casper.captureSelector('image_path.png', 'selector')</code></pre>
+					</section>
+					<section>
+						<h2>Exercise</h2>
+						<p>Capture this image from spainjs.org</p>
+						<img src='./img/showreel.png' />
+					</section>
+					<section>
+						<h2>Solution</h2>
+						<pre><code>var casper = require('casper').create({
+	viewportSize: {
+		width: 400,
+		height: 300
+	}
+});
+
+casper.start('http://spainjs.org', function(){
+    this.captureSelector('showreel.png', '.showreel');
+});
+
+casper.run(function(){
+	this.echo('finished');
+	this.exit();
+});</code></pre>
+					</section>
+				</section>
 				<section>
 					<h1>THANKS!!</h1>
 						<div class="image">
