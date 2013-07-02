@@ -532,6 +532,51 @@ casper.waitFor(function(check){
 });</code></pre>
 					</section>
 				</section>
+				<section data-background="#007777">
+					<section data-background="#007777">
+						<h2>Evaluate</h2>
+						<p>Evaluates an expression in the current page DOM context.</p>
+					</section>
+					<section data-background="#007777">
+						<p>Think of the evaluate() method as a gate between the CasperJS environment and the one of the page you have opened; everytime you pass a closure to evaluate(), you're entering the page and execute code as if you were using the browser console.</p>
+					</section>
+					<section data-background="#007777">
+						<div class="image">
+							<img src="./img/evaluate.png">
+						</div>
+					</section>
+					<section data-background="#007777">
+						<h2>example</h2>
+						<pre><code>casper.start('http://casperjs.azurewebsites.net/');
+
+casper.then(function()
+{
+	this.echo(this.evaluate(function()
+	{
+		return document.title;
+	}));
+});</code></pre>
+					</section>
+					<section data-background="#007777">
+						<h2>exercise</h2>
+						<p>change the body background color of the page and then, make a capture</p>
+					</section>
+					<section data-background="#007777">
+						<h2>Solution</h2>
+						<pre><code>casper.start('http://casperjs.azurewebsites.net/');
+
+casper.then(function()
+{
+	this.evaluate(function()
+	{
+		$("body").css("background-color", "red");
+		return;
+	});
+
+	this.capture('redBody.png');
+});</code></pre>
+					</section>
+				</section>
 
 				<section data-background="#007777">
 					<h1>THANKS!!</h1>
