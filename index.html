@@ -559,7 +559,7 @@ casper.then(function()
 					</section>
 					<section data-background="#007777">
 						<h2>exercise</h2>
-						<p>change the body background color of the page and then, make a capture</p>
+						<p>Change the paged body background color and then, make a capture.</p>
 					</section>
 					<section data-background="#007777">
 						<h2>Solution</h2>
@@ -579,11 +579,113 @@ casper.then(function()
 				</section>
 
 				<section data-background="#007777">
+					<section>
+						<h2>Clicking</h2>
+						<img src="./img/click.jpg">
+					</section>
+					<section>
+						<h2>click</h2>
+						<p>Performs a click on the element matching the provided selector expression.</p>
+						<pre><code>casper.click('selector');</code></pre>
+					</section>
+					<section>
+						<h2>exercise</h2>
+						<p>Load home page and then click in details button</p>
+					</section>
+					<section>
+						<h2>solution</h2>
+						<pre><code>casper.start('http://casperjs.azurewebsites.net', function(){
+	this.waitForSelector('#countrySelect', function(){
+        this.echo("Let's go!");
+        this.echo(this.getTitle());
+    });
+});
+
+casper.then(function(){
+	this.click('#details');
+});</code></pre>
+					</section>
+					<section>
+						<h2>clickLabel</h2>
+						<p>Clicks on the first DOM element found containing label text. Optionaly ensures that the element node name is tag.</p>
+						<pre><code>casper.clickLabel('label', 'tag');</code></pre>
+					</section>
+					<section>
+						<h2>exercise</h2>
+						<p>Load home page and then click in details button</p>
+					</section>
+					<section>
+						<h2>solution</h2>
+						<pre><code>casper.start('http://casperjs.azurewebsites.net', function(){
+	this.waitForSelector('#countrySelect', function(){
+        this.echo("Let's go!");
+        this.echo(this.getTitle());
+    });
+});
+
+casper.then(function(){
+	this.clickLabel('Details','a');
+});</code></pre>
+					</section>
+				</section>		
+
+				<section data-background="#007777">
+					<section data-background="#007777">
+						<h2>Back and forward</h2>
+					</section>
+					<section>
+						<p>We could go back and forward using</p>
+						<pre><code>this.back()</code></pre>
+						<p>and</p>
+						<pre><code>this.forward()</code></pre>
+					</section>
+					<section>
+						<h2>Exercise</h2>
+						<p class="fragment roll-in">Go to casperjs.azurewebsites.com</p>
+						<p class="fragment roll-in">Wait for the first combo to load</p>
+						<p class="fragment roll-in">Click on details</p>
+						<p class="fragment roll-in">Go back</p>
+						<p class="fragment roll-in">Go forward</p>
+					</section>
+					<section>
+						<h2>Solution</h2>
+						<pre><code>var casper = require('casper').create();
+
+casper.start('http://localhost:8099', function(){
+	this.waitForSelector('#countrySelect', function(){
+        this.echo(this.getTitle());
+    });
+});
+
+
+casper.then(function(){
+	this.click('#details');
+});
+
+casper.then(function(){
+	this.echo(this.getTitle());
+	this.back();
+});
+
+casper.then(function(){
+	this.echo(this.getTitle());
+	this.forward();
+});
+
+casper.run(function(){
+	this.echo(this.getTitle());
+	this.echo('finished');
+	this.exit();
+});</code></pre>
+					</section>
+				</section>
+
+				<section data-background="#007777">
 					<h1>THANKS!!</h1>
 						<div class="image">
 							<img width="50%" src="./img/thanks.jpg" />
 						</div>
-				</section>			
+				</section>	
 
 			</div>
 
