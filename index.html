@@ -514,6 +514,23 @@ casper.waitFor(function(check){
     });
 });</code></pre>
 					</section>
+					<section data-background="#007777">
+						<h2>waitUntilVisible</h2>
+						<p>Waits until the selector is visible in the remote DOM.</p>
+						<pre><code>casper.waitUntilVisible('a_selctor', function() {
+    // do something
+});</code></pre>
+					</section>
+					<section data-background="#007777">
+						<h2>exercise</h2>
+						<p>Wait until wellcome message in Home is visible.</p>
+					</section>
+					<section data-background="#007777">
+						<h2>solution</h2>
+						<pre><code>casper.waitUntilVisible('#wellcome-section', function(){
+	this.echo("Wellcome message visible");
+});</code></pre>
+					</section>
 				</section>
 
 				<section data-background="#007777">
