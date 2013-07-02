@@ -442,7 +442,79 @@ casper.run(function(){
 					</section>
 				</section>
 
+				<section data-background="#007777">
+					<section data-background="#007777">
+						<h2>waiting</h2>
+						<div class="image">
+							<img src="./img/wait.jpg" />
+						</div>
+					</section>
+					<section data-background="#007777">
+						<h2>wait</h2>
+						<pre><code>casper.wait(1000, function() {
+    this.echo("I've waited for a second.");
+});</code></pre>
+					</section>
+					<section data-background="#007777">
+						<h2>waitfor</h2>
+						<p>Waits until a function returns true to process any next step.</p>
+						<pre><code>casper.waitFor(1000, function check() {
+    // return something true
+});</code></pre>
+					</section>
+					<section data-background="#007777">
+						<h2>exercise</h2>
+						<p>Wait until Home is loaded based on his title.</p>
+					</section>
+					<section data-background="#007777">
+						<h2>solution</h2>
+						<pre><code>casper.start('http://casperjs.azurewebsites.net/', function(){
+	this.echo(this.getTitle());
+});
 
+casper.waitFor(function(check){
+	return (this.getTitle() == 'Home | Application');
+});</code></pre>
+					</section>
+					<section data-background="#007777">
+						<h2>waitForSelector</h2>
+						<p>Waits until the selector exists in the remote DOM.</p>
+						<pre><code>casper.waitForSelector('a_selctor', function() {
+    // do something
+});</code></pre>
+					</section>
+					<section data-background="#007777">
+						<h2>exercise</h2>
+						<p>Wait until Home is loaded based on the first combo.</p>
+					</section>
+					<section data-background="#007777">
+						<h2>solution</h2>
+						<pre><code>casper.start('http://casperjs.azurewebsites.net/', function(){
+	this.waitForSelector('#countrySelect', function(){
+        this.echo(this.getTitle());
+    });
+});</code></pre>
+					</section>
+					<section data-background="#007777">
+						<h2>waitForText</h2>
+						<p>Waits until the selector exists in the remote DOM.</p>
+						<pre><code>casper.waitForSelector('a_selctor', function() {
+    // do something
+});</code></pre>
+					</section>
+					<section data-background="#007777">
+						<h2>exercise</h2>
+						<p>Wait until Home is loaded based on the "view" word on the page.</p>
+					</section>
+					<section data-background="#007777">
+						<h2>solution</h2>
+						<pre><code>casper.start('http://casperjs.azurewebsites.net/', function(){
+	this.waitForText("view", function(){
+        this.echo(this.getTitle());
+    });
+});</code></pre>
+					</section>
+				</section>
 
 				<section data-background="#007777">
 					<h1>THANKS!!</h1>
