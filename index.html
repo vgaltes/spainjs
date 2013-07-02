@@ -424,7 +424,22 @@ casper.run(function(){
     casper.echo(resource.url + ' is 404');
 });</code></pre>
 					</section>
-					<section data-background="#007777"><h2>Find out the differences between the two generic ways</h2></section>
+					<section data-background="#007777"><h2>Find out the differences between the two generic ways</h2>
+					<p>You could use <a href='http://casperjs.azurewebsites.net'>http://casperjs.azurewebsites.net</a></p>
+					</section>
+				</section>
+				<section data-background="#007777">
+					<section>
+						<h2>Finding errors</h2>
+					</section>
+					<section>
+						<pre><code>casper.on("page.error", function (msg, trace) {
+    this.echo("Error:    " + msg, "ERROR");
+    this.echo("file:     " + trace[0].file, "WARNING");
+    this.echo("line:     " + trace[0].line, "WARNING");
+    this.echo("function: " + trace[0]["function"], "WARNING");
+});</code></pre>
+					</section>
 				</section>
 
 
