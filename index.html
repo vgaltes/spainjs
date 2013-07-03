@@ -634,7 +634,7 @@ casper.then(function(){
 						<h2>Back and forward</h2>
 					</section>
 					<section>
-						<p>We could go back and forward using</p>
+						<p>We can go back and forward using</p>
 						<pre><code>this.back()</code></pre>
 						<p>and</p>
 						<pre><code>this.forward()</code></pre>
@@ -680,6 +680,251 @@ casper.run(function(){
 					</section>
 				</section>
 
+				<section data-background="#007777">
+					<section data-background="#007777">
+						<h2>Filling forms</h2>
+					</section>
+					<section data-background="#007777">
+						<p>We could fill forms using the function fill</p>
+						<pre><code>this.fill('idForm', {
+    'input1Name':    'input1Value',
+    'input2Name':    'input2Value'
+}, true);</code></pre>
+    				<p>With the last 'true' we will submit the form</p>
+						
+					</section>
+					<section>
+						<h2>Exercise</h2>
+						<p class="fragment roll-in">Go to casperjs.azurewebsites.com</p>
+						<p class="fragment roll-in">Wait for the first combo to load</p>
+						<p class="fragment roll-in">Click on info</p>
+						<p class="fragment roll-in">Fill the form</p>
+						<p class="fragment roll-in">Fetch the response text</p>
+						<p class="fragment roll-in">Tip 1: you can submit the form using jquery</p>
+						<p class="fragment roll-in">Tip 2: wait for the response text length to be greater than 0</p>
+						<p class="fragment roll-in">Tip 3: use casper.fetch to get the response text</p>
+					</section>
+					<section>
+						<h2>solution</h2>
+						<pre><code>casper.then(function(){
+	this.waitUntilVisible('#countrySelect', function(){
+        this.clickLabel('Info','a');
+    });
+});
+
+casper.then(function() {
+	this.waitUntilVisible('#info-form', function(){
+	    this.fill('form#info-form', {
+	        'FirstName': 'John',
+	        'LastName': 'Smith'
+	    });
+	    this.evaluate(function(){
+	    	$('input[type="submit"]').click();
+	    	return;
+	    });
+	});
+});
+
+casper.then(function() {
+	this.waitFor(function check() {
+		return this.evaluate(function(){
+    		return ($("#response").text().length > 0);
+    	});
+	}, function then()
+	{
+		this.echo('The text is' + this.fetchText('#response'));
+    });
+});</code></pre>
+					</section>
+				</section>				
+
+				<section data-background="#007777">
+					<section>
+						<h2>injecting scripts</h2>
+					</section>
+					<section>
+						<p>We can inject scripts into the remote DOM in every response by setting the clientScripts option of CasperJS</p>
+						<pre><code>var casper = require('casper').create({
+    clientScripts:  [
+        'includes/jquery.js',      // These two scripts will be injected in remote
+        'includes/underscore.js'   // DOM on every request
+    ]
+});</code></pre>
+					</section>
+					<section>
+						<h2>Exercise</h2>
+						<p class="fragment roll-in">Create an script like this and save it on your HD</p>
+						<pre class="fragment roll-in"><code>function getCurrentDate(){
+    return moment().format('MMMM Do YYYY, h:mm:ss a');
+};</code></pre>
+						<p class="fragment roll-in">Inject the script</p>
+						<p class="fragment roll-in">Use the function</p>
+					</section>
+					<section>
+						<h2>Solution</h2>
+						<pre><code>this.echo(this.evaluate(function(){
+		return getCurrentDate();	
+	}));</code></pre>
+					</section>
+				</section>
+				<section data-background="#007777">
+					<section>
+						<h2>Testing</h2>
+					</section>
+					<section>
+						<p>The basic structure</p>
+						<pre><code>var casper = require('casper').create();
+
+casper.start('http://casperjs.azurewebsites.com');
+
+casper.then(function(){
+	this.test.pass('SpainJS is a great conference');
+	this.test.fail('I am not going to talk with anybody these three days');
+});
+
+casper.run(function(){
+	this.test.done(2);
+	this.test.renderResults(true);
+});</code></pre>
+					</section>
+					<section>
+						<h2>Basic asserts</h2>
+					</section>
+					<section>
+						<h2>Assert</h2>
+						<p>Asserts that the provided condition strictly resolves to a boolean true.</p>
+						<pre><code>this.test.assert(this.getCurrentUrl() === url, 'url is the one expected');</code></pre>
+					</section>
+					<section>
+						<h2>AssertNot</h2>
+						<p>Asserts that the passed subject resolves to some falsy value.</p>
+						<pre><code>casper.test.assertNot(false, "Universe is still operational");</code></pre>
+					</section>
+					<section>
+						<h2>AssertTruthy</h2>
+						<p>Asserts that a given subject is truthy.</p>
+						<pre><code>casper.test.assertTruthy(true, "The workshop is going well");</code></pre>
+					</section>
+					<section>
+						<h2>AssertFalsy</h2>
+						<p>Asserts that a given subject is falsy.</p>
+						<pre><code>casper.test.assertFalsy(true, "I'm bored");</code></pre>
+					</section>
+					<section>
+						<h2>AssertEquals</h2>
+						<p>Asserts that two values are strictly equals.</p>
+						<pre><code>this.test.assertEquals(this.getCurrentUrl(), url, 'url is the one expected');</code></pre>
+					</section>
+					<section>
+						<h2>AssertNotEquals</h2>
+						<p>Asserts that two values are not strictly equals.</p>
+						<pre><code>this.test.assertNotEquals(Barça == Madrid, 'Depends who you ask');</code></pre>
+					</section>
+					<section>
+						<h2>more advanced asserts</h2>						
+					</section>
+					<section>
+						<h2>assertExists</h2>
+						<p>Asserts that an element matching the provided selector expression exists in remote DOM environment.</p>
+						<pre><code>this.test.assertExists('form[name="gs"]', 'google.fr has a form with name "gs"');</code></pre>
+					</section>
+					<section>
+						<h2>assertDoesntExist</h2>
+						<p>Asserts that an element matching the provided selector expression doesn't exists within the remote DOM environment.</p>
+						<pre><code>this.test.assertDoesntExist('form[name="gs"]', 'google.fr has a form with name "gs"');</code></pre>
+					</section>
+					<section>
+						<h2>assertEval</h2>
+						<p>Asserts that a code evaluation in remote DOM strictly resolves to a boolean true.</p>
+						<pre><code>casper.start('http://www.google.fr/', function() {
+    this.test.assertEval(function() {
+        return document.querySelectorAll('form').length > 0;
+    }, 'google.fr has at least one form');
+    this.test.assertEval(function(title) {
+        return document.title === title;
+    }, 'google.fr title is "Google"', 'Google');
+});</code></pre>
+					</section>
+					<section>
+						<h2>assertField</h2>
+						<p>Asserts that a given form field has the provided value:</p>
+						<pre><code>casper.start('http://www.google.fr/', function() {
+    this.fill('form[name="gs"]', { q: 'plop' }, false);
+    this.test.assertField('q', 'plop');
+});</code></pre>
+					</section>
+					<section>
+						<h2>assertHttpStatus</h2>
+						<p>Asserts that current HTTP status code is the same as the one passed as argument.</p>
+						<pre><code>this.test.assertHttpStatus(200, 'google.fr is up');</code></pre>
+					</section>
+					<section>
+						<h2>assertVisible</h2>
+						<p>Asserts that the element matching the provided selector expression is visible.</p>
+						<pre><code>this.test.assertVisible('h1');</code></pre>
+					</section>
+					<section>
+						<h2>assertNotVisible</h2>
+						<p>Asserts that the element matching the provided selector expression is not visible.</p>
+						<pre><code>this.test.assertNotVisible('h6');</code></pre>
+					</section>
+					<section>
+						<h2>assertSelectorExists</h2>
+						<p>Asserts that at least an element matching the provided selector expression exists in remote DOM.</p>
+						<pre><code>this.test.assertSelectorExists('form[name="gs"]', 'google.fr provides a form');</code></pre>
+					</section>
+					<section>
+						<h2>assertSelectorHasText</h2>
+						<p>Asserts that given text exists in the provided selector.</p>
+						<pre><code>this.test.assertSelectorHasText('title', 'Google');</code></pre>
+					</section>
+					<section>
+						<h2>assertSelectorDoesntHaveText</h2>
+						<p>Asserts that given text does not exist in the provided selector.</p>
+						<pre><code>this.test.assertSelectorDoesntHaveText('title', 'Yahoo!');</code></pre>
+					</section>
+					<section>
+						<h2>assertTextExists</h2>
+						<p>Asserts that body plain text content contains the given string.</p>
+						<pre><code>this.test.assertTextExists('google', 'page body contains "google"');</code></pre>
+					</section>
+					<section>
+						<h2>assertTextDoesntExist</h2>
+						<p>Asserts that body plain text content doesn't contain the given string.</p>
+						<pre><code>this.test.assertTextDoesntExist('bing', 'page body does not contain "bing"');</code></pre>
+					</section>
+					<section>
+						<h2>assertTitle</h2>
+						<p>Asserts that title of the remote page equals to the expected one.</p>
+						<pre><code>this.test.assertTitle('Google', 'google.fr has the correct title');</code></pre>
+					</section>
+					<section>
+						<h2>Using different files for testing</h2>
+						<p>We could split our tests in serveral files. With two conditions:</p>
+						<p class="fragment roll-in">Not to create a new Casper instance in a split test file.</p>
+						<p class="fragment roll-in">To call the Tester.done() method when all the tests contained in a single file have been executed.</p>
+					</section>
+					<section>
+						<h2>Sample</h2>
+						<div class="fragment roll-in">
+							<p>File 1</p>
+							<pre><code>casper.test.pass('Suite 1 passing test');
+casper.test.fail('Suite 1 failing test');
+casper.test.done(2);</code></pre>
+						</div>
+						<div class="fragment roll-in">
+							<p>File 2</p>
+							<pre><code>casper.test.pass('Suite 2 passing test');
+casper.test.fail('Suite 2 failing test');
+casper.test.fail('Suite 2 another failing test');
+casper.test.done(3);</code></pre>
+						</div>
+						<div class="fragment roll-in">
+							<p>And now call:</p>
+							<pre><code>casperjs test tests --xunit=testsResults.xml</code></pre>
+						</div>
+					</section>
+				</section>
 				<section data-background="#007777">
 					<h1>THANKS!!</h1>
 						<div class="image">
